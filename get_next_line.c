@@ -6,40 +6,57 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:39:40 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/09 14:41:34 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/09 19:50:03 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
 char *make_string(size_t length)
 {
 	char *str;
+	size_t	i;
+
+	i = 0;
 	str = malloc(sizeof(char) * length);
 	if (!str) 
-	{
 		return NULL;
+	while (i < length)
+	{
+		str[i] = 0;
+		i++;
 	}
-	bzero(str, length);
-	return str;
+	return (str);
 }
 
 char	*read_in_buf(int fd)
 {
 	char	*buf;
-	size_t	n;
+	long	n;
 	
-	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+/*	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf)
-		return NULL;
+		return NULL;*/
+	buf = make_string(BUFFER_SIZE + 1);
 	n = read(fd, buf, BUFFER_SIZE);
-	if (n <= 0)
+	if (n <= 0) //!!!!!!
 	{
 		free(buf);
 		return NULL;
 	}
-	else;
-		buf[n] = '\0'; 
+	buf[n] = '\0';
 	return buf;
 }
 
@@ -48,9 +65,9 @@ char	*get_next_line(int fd)
 	char	*buf;
 	static char	*rest;
 	char	*line;
-	
-	if (fd < 0 || BUFFER_SIZE < 0)
-		return NULL;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (!rest)
 	{
 		rest = make_string(BUFFER_SIZE + 1);
@@ -60,7 +77,13 @@ char	*get_next_line(int fd)
 		if (check_newline(rest) == 0)
         {
 			buf = read_in_buf(fd);
-			rest = from_buf_to_rest(rest, buf);
+			rest = from_buf_to_rest(rest, buf); //	CHECK THE KUYU
+			if (rest == NULL)
+			{
+				line = NULL;
+
+				break;
+			}
 			continue;
 		}
 		if (check_newline(rest) == 1)
@@ -75,7 +98,7 @@ char	*get_next_line(int fd)
 /*
 int main()
 {
-        int fd = open("alice.txt", O_RDONLY, 0);
+        int fd = open("text.txt", O_RDONLY, 0);
         char *line_string;
         for (int i = 0; i < 280; i++)
         {
@@ -89,5 +112,6 @@ int main()
                 free(line_string);
         }
         close(fd);
+		system("leaks gnl");
 }
 */

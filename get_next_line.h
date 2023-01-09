@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:21:42 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/09 13:46:57 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/09 18:36:25 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+size_t	ft_strlen(char *str);
 size_t	newline_pos(char *buffy);
 char	*make_string(size_t length);
 char	*shift_rest(char *rest);
