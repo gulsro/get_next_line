@@ -79,7 +79,7 @@ char	*fill_line(char *rest)
 	line = make_string(ft_strlen(rest) + BUFFER_SIZE + 1);
 	if (!line)
 		return NULL;
-	while (1)
+	while (rest[i] != '\0')
 	{
 		line[i] = rest[i];
 		if(line[i] == '\n'){
