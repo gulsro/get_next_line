@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:39:40 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/11 16:26:41 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/11 20:02:30 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,42 +82,43 @@ char	*get_next_line(int fd)
 			if (buf != NULL)
 			{
 				rest = from_buf_to_rest(rest, buf);
+			//	printf("%s\n", rest);
 			} 
 			else if (rest != NULL)
 			{
-				printf("rst : %s\n", rest);
+			//	printf("rst : %s\n", rest);
 				line = fill_line(rest);
+			//	free(rest);
 				rest = NULL; //you free it but old value held in there, so NULL it.
 				break;
 			}
-			continue;
 		}
-		if (check_newline(rest) == 1)
+		else if (check_newline(rest) == 1)
 		{
 			line = fill_line(rest);
 			rest = shift_rest(rest);
 			break ;
 		}
 	}
-
+	
 	return line;
 }
-
+/*
 int main()
 {
-        int fd = open("1char.txt", O_RDONLY, 0);
+        int fd = open("empty.txt", O_RDONLY, 0);
         char *line_string;
-        for (int i = 0; i < 35; i++)
+        for (int i = 0; i < 6; i++)
         {
-                line_string = get_next_line(fd);
-		if (line_string == NULL)
-		{	
-			break ;
-		}
-		printf("%s", line_string);
-                free(line_string);
+			line_string = get_next_line(fd);
+			if (line_string == NULL)
+			{	
+				break ;
+			}
+			printf("%s", line_string);
+			free(line_string);
         }
         close(fd);
-
+		system("leaks a.out");
 }
-
+*/
