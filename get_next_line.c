@@ -35,9 +35,10 @@ char *make_string(size_t length)
 		return NULL;
 	while (i < length)
 	{
-		str[i] = 0;
+		str[i] = '\0';
 		i++;
 	}
+	//printf("makestr strlen: %d\n", ft_strlen(str));
 	return (str);
 }
 
@@ -46,9 +47,6 @@ char	*read_in_buf(int fd)
 	char	*buf;
 	long	n;
 	
-/*	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buf)
-		return NULL;*/
 	buf = make_string(BUFFER_SIZE + 1);
 	n = read(fd, buf, BUFFER_SIZE);
 	if (n <= 0) //!!!!!!
@@ -75,13 +73,17 @@ char	*get_next_line(int fd)
 	while (1) 
 	{
 		if (check_newline(rest) == 0)
-        {
+        	{
 			buf = read_in_buf(fd);
-			rest = from_buf_to_rest(rest, buf); //	CHECK THE KUYU
-			if (rest == NULL)
+		//	printf("rest is :%s\n", rest);
+			if (buf != NULL)
 			{
-				line = NULL;
-
+				rest = from_buf_to_rest(rest, buf);
+			} 
+			else if (rest != NULL)
+			{
+				line = fill_line(rest);
+				rest = NULL;
 				break;
 			}
 			continue;
@@ -90,25 +92,27 @@ char	*get_next_line(int fd)
 		{
 			line = fill_line(rest);
 			rest = shift_rest(rest);
+//			printf("rest is :%s\n", rest);
 			break ;
 		}
 	}
 	return line;
 }
+
 /*
 int main()
 {
-        int fd = open("text.txt", O_RDONLY, 0);
+        int fd = open("line_w_nl.txt", O_RDONLY, 0);
         char *line_string;
-        for (int i = 0; i < 280; i++)
+        for (int i = 0; i < 35; i++)
         {
                 line_string = get_next_line(fd);
-				if (line_string == NULL)
-				{
-					free(line_string);	
-					break ;
-				}
-				printf("%s", line_string);
+		if (line_string == NULL)
+		{
+			free(line_string);	
+			break ;
+		}
+		printf("%s", line_string);
                 free(line_string);
         }
         close(fd);

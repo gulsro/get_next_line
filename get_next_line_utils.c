@@ -76,10 +76,15 @@ char	*fill_line(char *rest)
 	size_t	i;
 
 	i = 0;
+	if (!rest || ft_strlen(rest) == 0)
+	{
+		free(rest);
+		return NULL;
+	}
 	line = make_string(ft_strlen(rest) + BUFFER_SIZE + 1);
 	if (!line)
 		return NULL;
-	while (1)
+	while (rest[i] != '\0')
 	{
 		line[i] = rest[i];
 		if(line[i] == '\n'){
@@ -98,7 +103,7 @@ char    *from_buf_to_rest(char *rest, char *buf)
 
 	buf_index = 0;
 	rest_index = 0;
-	if (buf == NULL)
+	if(buf == NULL && ft_strlen(rest) == 0)
 	{
 		free(rest);
 		return NULL;
