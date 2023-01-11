@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:39:40 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/09 19:50:03 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/11 16:26:41 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*read_in_buf(int fd)
 	long	n;
 	
 	buf = make_string(BUFFER_SIZE + 1);
+	if (buf == NULL)
+		return NULL;
 	n = read(fd, buf, BUFFER_SIZE);
 	if (n <= 0) //!!!!!!
 	{
@@ -69,21 +71,23 @@ char	*get_next_line(int fd)
 	if (!rest)
 	{
 		rest = make_string(BUFFER_SIZE + 1);
+		if (rest == NULL)
+			return NULL;
 	}
 	while (1) 
 	{
 		if (check_newline(rest) == 0)
-        	{
+        {
 			buf = read_in_buf(fd);
-		//	printf("rest is :%s\n", rest);
 			if (buf != NULL)
 			{
 				rest = from_buf_to_rest(rest, buf);
 			} 
 			else if (rest != NULL)
 			{
+				printf("rst : %s\n", rest);
 				line = fill_line(rest);
-				rest = NULL;
+				rest = NULL; //you free it but old value held in there, so NULL it.
 				break;
 			}
 			continue;
@@ -92,30 +96,28 @@ char	*get_next_line(int fd)
 		{
 			line = fill_line(rest);
 			rest = shift_rest(rest);
-//			printf("rest is :%s\n", rest);
 			break ;
 		}
 	}
+
 	return line;
 }
 
-/*
 int main()
 {
-        int fd = open("line_w_nl.txt", O_RDONLY, 0);
+        int fd = open("1char.txt", O_RDONLY, 0);
         char *line_string;
         for (int i = 0; i < 35; i++)
         {
                 line_string = get_next_line(fd);
 		if (line_string == NULL)
-		{
-			free(line_string);	
+		{	
 			break ;
 		}
 		printf("%s", line_string);
                 free(line_string);
         }
         close(fd);
-		system("leaks gnl");
+
 }
-*/
+

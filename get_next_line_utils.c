@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:26:59 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/09 19:47:55 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/11 16:26:44 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ char	*shift_rest(char *rest)
 	i_rest = 0;
 	i_shift = 0;
 	shifted = make_string(ft_strlen(rest) - newline_pos(rest));
-	if (!shifted)
-		return NULL;
 	while (rest[i_rest] != '\0')
 	{
 		if (rest[i_rest] == '\n')
@@ -76,14 +74,13 @@ char	*fill_line(char *rest)
 	size_t	i;
 
 	i = 0;
-	if (!rest || ft_strlen(rest) == 0)
+	if (rest == NULL || ft_strlen(rest) == 0)
 	{
+		printf("rest is : %s\n", rest);
 		free(rest);
 		return NULL;
 	}
 	line = make_string(ft_strlen(rest) + BUFFER_SIZE + 1);
-	if (!line)
-		return NULL;
 	while (rest[i] != '\0')
 	{
 		line[i] = rest[i];
