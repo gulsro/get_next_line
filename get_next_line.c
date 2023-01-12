@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:39:40 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/11 20:02:30 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/12 16:59:40 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char *make_string(size_t length)
 		str[i] = '\0';
 		i++;
 	}
-	//printf("makestr strlen: %d\n", ft_strlen(str));
 	return (str);
 }
 
@@ -51,7 +50,7 @@ char	*read_in_buf(int fd)
 	if (buf == NULL)
 		return NULL;
 	n = read(fd, buf, BUFFER_SIZE);
-	if (n <= 0) //!!!!!!
+	if (n <= 0)
 	{
 		free(buf);
 		return NULL;
@@ -80,16 +79,11 @@ char	*get_next_line(int fd)
         {
 			buf = read_in_buf(fd);
 			if (buf != NULL)
-			{
 				rest = from_buf_to_rest(rest, buf);
-			//	printf("%s\n", rest);
-			} 
 			else if (rest != NULL)
 			{
-			//	printf("rst : %s\n", rest);
 				line = fill_line(rest);
-			//	free(rest);
-				rest = NULL; //you free it but old value held in there, so NULL it.
+				rest = NULL;
 				break;
 			}
 		}

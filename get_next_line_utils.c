@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:26:59 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/11 20:02:23 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/12 17:46:34 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ char	*shift_rest(char *rest)
 	i_shift = 0;
 	shifted = make_string(ft_strlen(rest) - newline_pos(rest));
 	if (!shifted)
+	{
+		free(rest)
 		return ( NULL);
+	}
 	while (rest[i_rest] != '\0')
 	{
 		if (rest[i_rest] == '\n')
@@ -78,21 +81,26 @@ char	*fill_line(char *rest)
 	i = 0;
 	if (rest == NULL || ft_strlen(rest) == 0)
 	{
-	//	printf("rest is : %s\n", rest);
 		free(rest);
+		rest = NULL;
 		return NULL;
 	}
 	line = make_string(ft_strlen(rest) + BUFFER_SIZE + 1);
 	if (!line)
+	{
+		free(rest);
+		rest = NULL;
 		return NULL;
+	}
 	while (rest[i] != '\0')
 	{
 		line[i] = rest[i];
-		if(line[i] == '\n'){
+		if(line[i] == '\n')
 			break;
-		}
 		i++;
 	}
+	free(rest);
+	rest = NULL;
 	return line;
 }
 
@@ -109,10 +117,9 @@ char    *from_buf_to_rest(char *rest, char *buf)
 		free(rest);
 		return NULL;
 	}
-//	printf("filled_rest: %s\n", filled_rest );
 	filled_rest = make_string(ft_strlen(rest) + BUFFER_SIZE + 1);
 	if (!filled_rest)
-		return (free(rest), NULL);
+		return (free(rest), free(buf), NULL);
 	while (ft_strlen(rest) > 0 && rest[rest_index] != '\0')
 	{
 		filled_rest[rest_index] = rest[rest_index];
@@ -126,7 +133,6 @@ char    *from_buf_to_rest(char *rest, char *buf)
 	}
 	filled_rest[rest_index] = '\0';
 	free(rest);
-//	rest = NULL;
 	free(buf);
 	return filled_rest;
 }
