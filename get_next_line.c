@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:39:40 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/12 16:59:40 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/12 18:15:09 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ char	*get_next_line(int fd)
 	
 	return line;
 }
-/*
+
 int main()
 {
-        int fd = open("empty.txt", O_RDONLY, 0);
+        int fd = open("alice.txt", O_RDONLY, 0);
         char *line_string;
         for (int i = 0; i < 6; i++)
         {
@@ -113,6 +113,6 @@ int main()
 			free(line_string);
         }
         close(fd);
-		system("leaks a.out");
+//		system("leaks a.out");
 }
-*/
+

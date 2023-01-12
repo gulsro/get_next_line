@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/09 13:26:59 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/12 17:46:34 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/12 18:16:17 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*shift_rest(char *rest)
 	shifted = make_string(ft_strlen(rest) - newline_pos(rest));
 	if (!shifted)
 	{
-		free(rest)
+		free(rest);
 		return ( NULL);
 	}
 	while (rest[i_rest] != '\0')
