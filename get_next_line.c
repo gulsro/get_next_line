@@ -41,7 +41,7 @@ char *make_string(size_t length)
 	return (str);
 }
 
-char	*read_in_buf(int fd)
+char	*read_in_buf(int fd, char *rest)
 {
 	char	*buf;
 	long	n;
@@ -50,7 +50,14 @@ char	*read_in_buf(int fd)
 	if (buf == NULL)
 		return NULL;
 	n = read(fd, buf, BUFFER_SIZE);
-	if (n <= 0)
+	if (n == 0)
+	{
+		free(buf);
+		if (ft_strlen(rest) > 0)
+			return rest;
+		return NULL;
+	}
+	if (n < 0)
 	{
 		free(buf);
 		return NULL;
@@ -77,7 +84,12 @@ char	*get_next_line(int fd)
 	{
 		if (check_newline(rest) == 0)
         {
-			buf = read_in_buf(fd);
+			buf = read_in_buf(fd, rest);
+			if (!buf && ft_strlen(rest) == 0)
+			{
+				free(rest);
+				return NULL;
+			}
 			if (buf != NULL)
 				rest = from_buf_to_rest(rest, buf);
 			else if (rest != NULL)

@@ -13,9 +13,9 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-//#ifndef BUFFER_SIZE
-//# define BUFFER_SIZE 5
-//#endif
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 5
+#endif
 
 # include <stdio.h>
 # include <unistd.h>
@@ -30,7 +30,7 @@ char	*make_string(size_t length);
 char	*shift_rest(char *rest);
 char	*fill_line(char *rest);
 char	*from_buf_to_rest(char *rest, char *buf);
-char	*read_in_buf(int fd);
+char	*read_in_buf(int fd,char *rest);
 size_t	check_newline(char *buf);
 
 #endif

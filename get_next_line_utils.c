@@ -52,6 +52,7 @@ char	*shift_rest(char *rest)
 	if (!shifted)
 	{
 		free(rest);
+		rest = NULL;
 		return ( NULL);
 	}
 	while (rest[i_rest] != '\0')
@@ -99,8 +100,8 @@ char	*fill_line(char *rest)
 			break;
 		i++;
 	}
-	free(rest);
-	rest = NULL;
+//	free(rest);
+//	rest = NULL;
 	return line;
 }
 
