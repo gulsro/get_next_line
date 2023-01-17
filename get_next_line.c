@@ -15,7 +15,7 @@
 size_t	ft_strlen(char *str)
 {
 	size_t	i;
-
+	
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -45,14 +45,21 @@ char	*read_in_buf(int fd, char *rest)
 {
 	char	*buf;
 	long	n;
-	
+
+/*	if (fd < 0)
+	{
+		free(rest);
+		return NULL;	
+	}*/
 	buf = make_string(BUFFER_SIZE + 1);
 	if (buf == NULL)
 		return NULL;
 	n = read(fd, buf, BUFFER_SIZE);
 	if (n == 0)
 	{
+//		printf("%s\n", rest);
 		free(buf);
+		buf = NULL;
 		if (ft_strlen(rest) > 0)
 			return rest;
 		return NULL;
@@ -74,6 +81,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+/*	if (buf == NULL);
+		return */
 	if (!rest)
 	{
 		rest = make_string(BUFFER_SIZE + 1);
@@ -83,7 +92,7 @@ char	*get_next_line(int fd)
 	while (1) 
 	{
 		if (check_newline(rest) == 0)
-        {
+		{
 			buf = read_in_buf(fd, rest);
 			if (!buf && ft_strlen(rest) == 0)
 			{
@@ -91,7 +100,14 @@ char	*get_next_line(int fd)
 				return NULL;
 			}
 			if (buf != NULL)
+			{
+				if (strcmp(buf, rest) == 0) //EOF, no NL in entire file
+				{
+					rest = NULL;
+					return buf;
+				}
 				rest = from_buf_to_rest(rest, buf);
+			}
 			else if (rest != NULL)
 			{
 				line = fill_line(rest);
@@ -112,7 +128,7 @@ char	*get_next_line(int fd)
 
 int main()
 {
-        int fd = open("alice.txt", O_RDONLY, 0);
+        int fd = open("empty.txt", O_RDONLY, 0);
         char *line_string;
         for (int i = 0; i < 6; i++)
         {

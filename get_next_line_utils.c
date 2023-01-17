@@ -42,7 +42,7 @@ size_t     check_newline(char *buf)
 
 char	*shift_rest(char *rest)
 {
-	static char	*shifted;
+	char	*shifted;
 	size_t	i_rest;
 	size_t 	i_shift;
 
@@ -107,7 +107,7 @@ char	*fill_line(char *rest)
 
 char    *from_buf_to_rest(char *rest, char *buf)
 {
- 	static char	*filled_rest;
+ 	char	*filled_rest;
  	size_t     rest_index;
 	size_t     buf_index;
 
