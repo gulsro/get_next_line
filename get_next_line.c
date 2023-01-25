@@ -6,7 +6,7 @@
 /*   By: gozturk <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/25 11:30:56 by gozturk       #+#    #+#                 */
-/*   Updated: 2023/01/25 11:31:03 by gozturk       ########   odam.nl         */
+/*   Updated: 2023/01/25 12:38:06 by gozturk       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ char	*read_from_file(int fd, char *stash)
 		if (n == 0 || check_newline(stash) != 0)
 			break ;
 	}
-	if (stash && ft_strlen(stash) == 0)
-		stash = free_stash(stash);
 	return (stash);
 }
 
@@ -90,15 +88,18 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (free(stash), NULL);
 	stash = shift_stash(stash);
+	if (stash && ft_strlen(stash) == 0)
+		stash = free_stash(stash);
 	return (line);
 }
 /*
+#include <stdio.h>
  int main()
  {
 	 int fd = open("alice.txt", O_RDONLY, 0);
 //	int fd = 0;
 	 char *line_string;
-	 for (int i = 0; i < 10; i++)
+	 for (int i = 0; i < 1000; i++)
 	 {
 		 line_string = get_next_line(fd);
 		 if (line_string == NULL)
@@ -109,5 +110,5 @@ char	*get_next_line(int fd)
 		 free(line_string);
 	 }
 	 close(fd);
- //              system("leaks a.out");
- }*/
+//               system("leaks a.out");
+}*/
