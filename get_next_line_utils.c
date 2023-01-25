@@ -22,7 +22,7 @@ char	*fill_line(char *stash)
 	size_t	i;
 
 	i = 0;
-	filled_line = make_string(ft_strlen(stash) + BUFFER_SIZE + 1);
+	filled_line = make_string(ft_strlen(stash) + 1);
 	if (!filled_line)
 		return (NULL);
 	while (stash[i] != '\0')
@@ -80,7 +80,10 @@ char	*from_buf_to_stash(char *prev_stash, char *buf)
 	}
 	new_stash = make_string(ft_strlen(prev_stash) + BUFFER_SIZE + 1);
 	if (!new_stash)
+	{
+		free(prev_stash);
 		return (NULL);
+	}
 	while (prev_stash[stash_i] != '\0')
 	{
 		new_stash[stash_i] = prev_stash[stash_i];

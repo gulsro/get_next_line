@@ -39,7 +39,7 @@ char	*make_string(size_t length)
 char	*read_from_file(int fd, char *stash)
 {
 	char	buf[BUFFER_SIZE + 1];
-	ssize_t	n;
+rssize_t	n;
 
 	while (1)
 	{
