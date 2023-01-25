@@ -39,7 +39,7 @@ char	*make_string(size_t length)
 char	*read_from_file(int fd, char *stash)
 {
 	char	buf[BUFFER_SIZE + 1];
-rssize_t	n;
+	ssize_t	n;
 
 	while (1)
 	{
@@ -84,6 +84,7 @@ char	*get_next_line(int fd)
  int main()
  {
 	 int fd = open("alice.txt", O_RDONLY, 0);
+//	int fd = 0;
 	 char *line_string;
 	 for (int i = 0; i < 10; i++)
 	 {

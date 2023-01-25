@@ -80,10 +80,7 @@ char	*from_buf_to_stash(char *prev_stash, char *buf)
 	}
 	new_stash = make_string(ft_strlen(prev_stash) + BUFFER_SIZE + 1);
 	if (!new_stash)
-	{
-		free(prev_stash);
-		return (NULL);
-	}
+		return (free(prev_stash), NULL);
 	while (prev_stash[stash_i] != '\0')
 	{
 		new_stash[stash_i] = prev_stash[stash_i];
